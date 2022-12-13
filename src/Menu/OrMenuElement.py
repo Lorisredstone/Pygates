@@ -7,40 +7,28 @@ with contextlib.redirect_stdout(None):
     import pygame
     
 import src.Menu.BlankMenuElement
-import src.Elements.CableElement
+import src.Elements.OrElement
 import src.Elements.BlankElement
     
 class Element(src.Menu.BlankMenuElement.Element):
     def __init__(self, screen:pygame.surface.Surface, currently_selected:bool = False) -> None:
-        self.image:pygame.surface.Surface = pygame.image.load("Assets/CableElement.jpg")
+        self.image:pygame.surface.Surface = pygame.image.load("Assets/OrElement.jpg")
         self.screen:pygame.surface.Surface = screen
         self.currently_selected:bool = currently_selected
-        self.placements:List[Tuple[int, int]] = [(0, 0), (0, 0)]
-        self.nb_of_placed_points:int = 0
     
     def reset(self) -> None:
         self.currently_selected = False
-        self.placements = [(0, 0), (0, 0)]
-        self.nb_of_placed_points = 0
     
     def click(self) -> None:
         self.currently_selected = not self.currently_selected
         self.reset()
         
-    def draw_to_screen(self) -> src.Elements.CableElement.Element:
-        return src.Elements.CableElement.Element(self.placements, self.screen)
+    def draw_to_screen(self, pos:Tuple[int, int]) -> src.Elements.OrElement.Element:
+        return src.Elements.OrElement.Element([pos, ], self.screen)
             
     def windowClick(self, pos:Tuple[int, int]) -> src.Elements.BlankElement.Element | None:
-        to_return:src.Elements.BlankElement.Element | None = None
-        if self.nb_of_placed_points == 0:
-            self.placements[0] = pos
-            self.nb_of_placed_points += 1
-        elif self.nb_of_placed_points == 1:
-            self.placements[1] = pos
-            self.nb_of_placed_points += 1
-            to_return = self.draw_to_screen()
-            # we have to draw a line between the two points
-            self.reset()
+        to_return:src.Elements.BlankElement.Element | None = self.draw_to_screen(pos)
+        self.reset()
         return to_return
         
     def render(self, screen:pygame.surface.Surface, pos:Tuple[int, int], size:Tuple[int, int]) -> None:

@@ -1,4 +1,5 @@
 from typing import Tuple, List, Any
+from typing_extensions import Self
 
 import contextlib
 
@@ -10,5 +11,5 @@ class Element:
         self.pos:List[Tuple[int, int]] = pos
         self.screen = screen
     
-    def render(self) -> None:
+    def render(self, to_render:List[Self]) -> None:
         ...

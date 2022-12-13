@@ -5,8 +5,8 @@ import contextlib
 with contextlib.redirect_stdout(None):
     import pygame
     
+import src.Menu.OrMenuElement
 import src.Menu.BlankMenuElement
-import src.Menu.CableElement
 import src.Elements.BlankElement
 
 class Menu:
@@ -20,7 +20,7 @@ class Menu:
         self.currently_selected:int = -1
         
         self.menu_items:List[src.Menu.BlankMenuElement.Element] = [src.Menu.BlankMenuElement.Element(self.screen)] * self.possibilities
-        self.menu_items[0] = src.Menu.CableElement.Element(self.screen)
+        self.menu_items[0] = src.Menu.OrMenuElement.Element(self.screen)
         
         self.new_elements:List[src.Elements.BlankElement.Element] = []
 

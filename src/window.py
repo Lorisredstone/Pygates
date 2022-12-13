@@ -45,5 +45,5 @@ class Window:
             self.screen.fill((0, 0, 0))
             self.draw()
             for element in self.to_screen:
-                element.render()
+                element.render(self.to_screen)
             pygame.display.flip()
